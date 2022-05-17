@@ -1,0 +1,19 @@
+<as-split [direction]="group.value" (dragEnd)="handleDrag($event)">
+    <as-split-area>
+        <app-glsl-canvas [fragment]="textContent" [width]="Width" [height]="Height"></app-glsl-canvas>
+
+    </as-split-area>
+    <as-split-area class="code-part">
+        <div class="menu">
+            <mat-button-toggle-group #group="matButtonToggleGroup" class="button-group" (change)="handlePostionChange($event)">
+                <mat-button-toggle value="horizontal" >
+                    <mat-icon>border_horizontal</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle value="vertical" >
+                    <mat-icon>border_vertical</mat-icon>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <app-monaco-editor (TextChange)="handleCodeChange($event)"></app-monaco-editor>
+    </as-split-area>
+</as-split>

@@ -1,0 +1,66 @@
+:host {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.canvas-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.code-part {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: hidden !important;
+    .menu {
+        border-top: #1e1e1e 1px solid;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        background-color: #3c3c3c !important;
+    }
+
+    app-monaco-editor {
+        height: 100%;
+    }
+}
+
+::ng-deep .as-split-gutter {
+    background-color: #3c3c3c !important;
+}
+
+mat-button-group {
+    color: #111112;
+
+}
+
+mat-button-toggle {
+    background-color: #1e1e1e;
+}
+
+::ng-deep mat-button-toggle .mat-button-toggle-label-content {
+    padding: 0 6px !important;
+    line-height: 33px !important;
+    color: #f1f1f1;
+}
+
+.button-group {
+    border: solid 1px #111112;
+    margin: 4px;
+    border-radius: 0;
+
+    mat-icon {
+        height: 16px;
+        width: 16px;
+        font-size: 24px;
+        transform: translate(-4px, -4px);
+    }
+}
