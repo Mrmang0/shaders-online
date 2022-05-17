@@ -784,3 +784,160 @@ smoothstep() performs smooth Hermite interpolation between 0 and 1 when edge0 < 
     return t * t * (3.0 - 2.0 * t);
 Results are undefined if edge0 ≥ edge1.
 `
+
+export const lengthDetails = `
+Calculate the length of a vector 
+
+Declaration 
+float length(float x)  
+float length(vec2 x)  
+float length(vec3 x)  
+float length(vec4 x)
+Parameters
+x specifies a vector of which to calculate the length.
+
+Description
+length() returns the length of the vector.`
+
+export const distanceDetails = `
+Calculate the distance between two points 
+
+Declaration 
+float distance(float p0, float p1)  
+float distance(vec2 p0, vec2 p1)  
+float distance(vec3 p0, vec3 p1)  
+float distance(vec4 p0, vec4 p1)
+Parameters
+p0 specifies the first of two points
+
+p1 specifies the second of two points
+
+Description
+distance() returns the distance between the two points p0 and p1.`
+
+
+export const dotDetails = `Calculate the dot product of two vectors
+
+Declaration
+float dot(float x, float y)  
+float dot(vec2 x, vec2 y)  
+float dot(vec3 x, vec3 y)  
+float dot(vec4 x, vec4 y)
+Parameters
+x specifies the first of two vectors
+
+y specifies the second of two vectors
+
+Description
+dot() returns the dot product of two vectors, x and y. i.e., x[0]⋅y[0]+x[1]⋅y[1]+... If x and y are the same the square root of the dot product is equivalent to the length of the vector. The input parameters can be floating scalars or float vectors. In case of floating scalars the dot function is trivial and returns the product of x and y.`
+
+export const crossDetails = `
+Calculate the cross product of two vectors
+
+Declaration
+vec3 cross(vec3 x, vec3 y)
+Parameters
+x specifies the first of two vectors
+
+y specifies the second of two vectors
+
+Description
+cross() returns the cross product of two vectors, x and y. The input parameters can only be 3-component floating vectors. The cross product is equivalent to the product of the length of the vectors times the sinus of the(smaller) angle between x and y.`
+
+export const normalizeDetails = `
+Calculate the unit vector in the same direction as the input vector
+
+Declaration
+float normalize(float x)  
+vec2 normalize(vec2 x)  
+vec3 normalize(vec3 x)  
+vec4 normalize(vec4 x)
+Parameters
+x specifies the vector to normalize.
+
+Description
+normalize() returns a vector with the same direction as its parameter, x, but with length 1.`
+
+export const faceforwardDetails = `
+faceforward — return a vector pointing in the same direction as another
+
+Declaration
+genType faceforward(	genType N,
+ 	genType I,
+ 	genType Nref);
+ 
+genDType faceforward(	genDType N,
+ 	genDType I,
+ 	genDType Nref);
+ 
+Parameters
+N
+Specifies the vector to orient.
+
+I
+Specifies the incident vector.
+
+Nref
+Specifies the reference vector.
+`
+
+export const reflectDetails = `
+Calculate the reflection direction for an incident vector
+
+Declaration
+float reflect(float I, float N)  
+vec2 reflect(vec2 I, vec2 N)  
+vec3 reflect(vec3 I, vec3 N)  
+vec4 reflect(vec4 I, vec4 N)
+Parameters
+I specifies the incident vector.
+
+N specifies the normal vector.
+
+Description
+For a given incident vector I and surface normal N reflect returns the reflection direction calculated as I - 2.0 * dot(N, I) * N.
+
+N should be normalized in order to achieve the desired result.`
+
+export const refractDetails = `
+Calculate the refraction direction for an incident vector
+
+Declaration
+float refract(float I, float N, float eta)  
+vec2 refract(vec2 I, vec2 N, float eta)  
+vec3 refract(vec3 I, vec3 N, float eta)  
+vec4 refract(vec4 I, vec4 N, float eta)
+Parameters
+I specifies the incident vector.
+
+N specifies the normal vector.
+
+eta specifies the ratio of indices of refraction.
+
+Description
+For a given incident vector I, surface normal N and ratio of indices of refraction, eta, refract returns the refraction vector, R.
+
+R is calculated as:
+
+k = 1.0 - eta * eta * (1.0 - dot(N, I) * dot(N, I));
+if (k < 0.0)
+    R = genType(0.0);       // or genDType(0.0)
+else
+    R = eta * I - (eta * dot(N, I) + sqrt(k)) * N;
+The input parameters I and N should be normalized in order to achieve the desired result.`
+
+export const matrixCompMultDetails = `
+Perform a component-wise multiplication of two matrices
+
+Declaration
+mat2 matrixCompMult(mat2 x, mat2 y)  
+mat3 matrixCompMult(mat3 x, mat3 y)  
+mat4 matrixCompMult(mat4 x, mat4 y)
+Parameters
+x specifies the first matrix multiplicand.
+
+y specifies the second matrix multiplicand.
+
+Description
+matrixCompMult() performs a component-wise multiplication of two matrices, yielding a result matrix where each component, result[i][j] is computed as the scalar product of x[i][j] and y[i][j].
+`

@@ -1,4 +1,4 @@
-import { acosDetails, asinDetails, atanDetails, boolDetails, bvec2Details, bvec3Details, bvec4Details, ceilDetails, clampDetails, constDetails, cosDetails, exp2Details, expDetails, floatDetails, floorDetails, fractDetails, intDetails, inverseSqrtDetails, Ivec2Details, Ivec3Details, Ivec4Details, log2Details, logDetails, mat2Details, mat3Details, mat4Details, maxDetails, minDetails, mixDetails, modDetails, powDetails, radiansDeclaration as radiansDetails, signDetails, sinDetails, smoothstepDetails, sqrtDetails, stepDetails, tanDetails, uniformDetails, varyingDetails, vec2Details, vec3Details, vec4Details, voidDetails } from "./glsl-details";
+import { acosDetails, asinDetails, atanDetails, boolDetails, bvec2Details, bvec3Details, bvec4Details, ceilDetails, clampDetails, constDetails, cosDetails, crossDetails, distanceDetails, dotDetails, exp2Details, expDetails, faceforwardDetails, floatDetails, floorDetails, fractDetails, intDetails, inverseSqrtDetails, Ivec2Details, Ivec3Details, Ivec4Details, lengthDetails, log2Details, logDetails, mat2Details, mat3Details, mat4Details, matrixCompMultDetails, maxDetails, minDetails, mixDetails, modDetails, normalizeDetails, powDetails, radiansDeclaration as radiansDetails, reflectDetails, refractDetails, signDetails, sinDetails, smoothstepDetails, sqrtDetails, stepDetails, tanDetails, uniformDetails, varyingDetails, vec2Details, vec3Details, vec4Details, voidDetails } from "./glsl-details";
 
 export function createProposals(monaco: any, model: any, position: any) {
 
@@ -447,8 +447,88 @@ export function createProposals(monaco: any, model: any, position: any) {
         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
     }
 
+    const length = {
+        label: 'length(x)',
+        kind: monaco.languages.CompletionItemKind.Function,
+        insertText: 'length($1)',
+        range: range,
+        detail: lengthDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+    }
 
-    const suggestions = [sign, floor, ceil, fract, mod, min, max, clamp, step, smoothstep, abs, pow, exp, log, exp2, log2, sqrt, inversesqrt, tan, asin, acos, atan, _const, attribute, _void, _bool, int, float, bvec2, bvec3, bvec4, ivec2, ivec3, ivec3, ivec4, vec2, vec3, vec4, mat2, mat3, mat4, mix, varying, unitform, precision, sin, cos, radians, degrees];
+    const distance = {
+        label: 'distance(x,y)',
+        kind: monaco.languages.CompletionItemKind.Function,
+        insertText: 'distance($1,$2)',
+        range: range,
+        detail: distanceDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+    }
+
+    const dot = {
+        label: 'dot(x,y)',
+        kind: monaco.languages.CompletionItemKind.Function,
+        insertText: 'dot($1,$2)',
+        range: range,
+        detail: dotDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+    }
+
+    const cross = {
+        label: 'cross(x,y)',
+        kind: monaco.languages.CompletionItemKind.Function,
+        insertText: 'cross($1,$2)',
+        range: range,
+        detail: crossDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+    }
+
+    const normalize = {
+        label: 'normalize(x)',
+        kind: monaco.languages.CompletionItemKind.Function,
+        insertText: 'normalize($1)',
+        range: range,
+        detail: normalizeDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+    }
+
+    const faceforward = {
+        label: 'faceforward(x,y,nref)',
+        kind: monaco.languages.CompletionItemKind.Function,
+        insertText: 'faceforward($1,$2,$3)',
+        range: range,
+        detail: faceforwardDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+    }
+
+    const reflect = {
+        label: 'reflect(I,N)',
+        kind: monaco.languages.CompletionItemKind.Function,
+        insertText: 'reflect($1,$2)',
+        range: range,
+        detail: reflectDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+    }
+
+    const refract = {
+        label: 'refract(I,N,eta)',
+        kind: monaco.languages.CompletionItemKind.Function,
+        insertText: 'refract($1,$2,$3)',
+        range: range,
+        detail: refractDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+    }
+
+    const matrixCompMult = {
+        label: 'matrixCompMult(x,y)',
+        kind: monaco.languages.CompletionItemKind.Function,
+        insertText: 'matrixCompMult($1,$2)',
+        range: range,
+        detail: matrixCompMultDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+    }
+
+    const suggestions = [matrixCompMult, refract, reflect, faceforward, normalize, cross, dot, distance, length, sign, floor, ceil, fract, mod, min, max, clamp, step, smoothstep, abs, pow, exp, log, exp2, log2, sqrt, inversesqrt, tan, asin, acos, atan, _const, attribute, _void, _bool, int, float, bvec2, bvec3, bvec4, ivec2, ivec3, ivec3, ivec4, vec2, vec3, vec4, mat2, mat3, mat4, mix, varying, unitform, precision, sin, cos, radians, degrees];
 
     return suggestions;
 }
