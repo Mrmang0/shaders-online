@@ -1,5 +1,6 @@
 import { AfterContentInit, ApplicationRef, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { Canvas } from 'glsl-canvas-js';
+import { Observable } from 'rxjs';
 import { default_frag } from '../app-monaco-editor/app-monaco-editor.component';
 
 @Component({
@@ -12,6 +13,9 @@ export class AppGlslCanvasComponent implements OnInit, AfterContentInit {
   public fragmentShander: string;
   public canvas: Canvas | null = null;
   public error: string = "";
+
+  @Input()
+  public Textures: Observable<any> | null = null;
 
   @Input()
   public get fragment(): string {
@@ -113,6 +117,11 @@ export class AppGlslCanvasComponent implements OnInit, AfterContentInit {
           this.error = "";
         }
       })
+    })
+
+    this.Textures?.subscribe(x => {
+      console.log(x);
+      this.canvas?.setTexture(x.textureName, x.textureUrl);
     })
   }
 

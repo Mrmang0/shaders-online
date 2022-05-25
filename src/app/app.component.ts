@@ -1,8 +1,11 @@
-import { Component, ElementRef, EventEmitter, Inject, Injectable, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Output } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { IOutputData } from 'angular-split';
-import { min, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { default_frag } from './app-monaco-editor/app-monaco-editor.component';
+import { AppUniformDialogComponent } from './app-uniform-dialog/app-uniform-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +22,12 @@ export class AppComponent {
   private dragPosition = 0;
   private orientation: "horizontal" | "vertical" = "horizontal";
 
+  public Textures = new Subject<any>();
 
-  constructor(@Inject(ElementRef) private elementRef: ElementRef) { }
+  constructor(
+    @Inject(ElementRef) private elementRef: ElementRef,
+    public dialog: MatDialog
+  ) { }
 
   public handleCodeChange(code: string) {
     this.textContent = code;
@@ -62,6 +69,16 @@ export class AppComponent {
       this.Width = minValue;
       this.Height = minValue;
     }
+  }
+
+  public openUniformDialog() {
+
+    console.log('open')
+
+    const ref = this.dialog.open(AppUniformDialogComponent);
+    ref.afterClosed().subscribe(result => {
+       this.Textures.next(result);
+    });
   }
 
 }

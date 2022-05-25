@@ -1,0 +1,8 @@
+<div mat-dialog-content>
+    <input matInput placeholder="u_tex1" [value]="fileName" (change)="onTextureNameChange($event)">
+    <input matInput placeholder="u_tex1" [value]="textureUrl" (change)="onTextureUrlChange($event)">
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close="test" (click)="closeDialog()" cdkFocusInitial>Add</button>
+    <button mat-button mat-dialog-close="test" (click)="closeDialog()">Close</button>
+</div>

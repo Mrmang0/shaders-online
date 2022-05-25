@@ -1,6 +1,7 @@
 declare var monaco: any;
 
 import type { languages } from 'monaco-editor'
+import { filter } from 'rxjs';
 import { createProposals } from './glsl-fucntions';
 export const conf: languages.LanguageConfiguration = {
     comments: {
@@ -185,9 +186,29 @@ function registerComplitions() {
 
         return {
             provideCompletionItems(model: any, position: any) {
+
+                const value = model.getValue() as string
+                const suggestions = createProposals(monaco, model, position)
+                const filesuggestions = value.split(' ')
+                    .flatMap(x =>
+                        x.split('\n')
+                            .flatMap(x => x.trim().replace(';', "")))
+                    .filter(x => x.length > 1)
+                    .map(x => x.replace(/\(.*\)/, ""))
+                    .filter(x => !x.match(/[\(\)]/))
+                    .filter(x => (x.length < 4 && !x.match(/[\d\(\),.]/) || x.length > 3))
+                    .filter(y => !suggestions.some(x => x.label.includes(y)))
+                    .filter((v, i, a) => a.indexOf(v) === i)
+                    .map(x => ({
+                        label: x,
+                        kind: monaco.languages.CompletionItemKind.None,
+                        insertText: x,
+                    }))
+
+
                 return {
                     incomplete: true,
-                    suggestions: createProposals(monaco, model, position)
+                    suggestions: [...suggestions, ...filesuggestions]
                 }
             }
         }

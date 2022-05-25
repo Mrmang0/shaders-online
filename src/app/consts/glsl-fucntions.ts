@@ -177,9 +177,9 @@ export function createProposals(monaco: any, model: any, position: any) {
     }
 
     const unitform = {
-        label: 'unitform',
+        label: 'uniform',
         kind: monaco.languages.CompletionItemKind.Keyword,
-        insertText: 'unitform',
+        insertText: 'uniform',
         range: range,
         detail: uniformDetails,
         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet

@@ -13,7 +13,7 @@ declare module 'glsl-canvas-js' {
         setTexture(
             key: string,
             urlElementOrData: string | HTMLCanvasElement | HTMLImageElement | HTMLVideoElement | Element | any,
-            options: any
+            // options: any =
         ): void
 
         setUniform(key: string, ...values: any[]): void;
