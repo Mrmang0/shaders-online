@@ -1,0 +1,38 @@
+<div class="add-uniform-form" [formGroup]="form">
+    <ng-container formArrayName="fields">
+        <ng-container *ngFor="let fieldForm of fieldsControls; let i = index">
+            <div class="uniform-item" [formGroup]="fieldForm">
+                <mat-form-field appearance="fill">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type">
+                        <mat-option value="float">float</mat-option>
+                        <mat-option value="texture_url">Texture url</mat-option>
+                        <mat-option value="texture_file">Texture file</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" *ngIf="fieldForm.value.type != 'texture_file'">
+                    <mat-label>Name</mat-label>
+                    <input formControlName="name" matInput />
+                </mat-form-field>
+
+                <div *ngIf="fieldForm.value.type == 'texture_file'">
+                    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+                    <input #fileInput type="file" id="file" formControlName="">
+                </div>
+                <mat-form-field appearance="fill" *ngIf="fieldForm.value.type != 'texture_file'">
+                    <mat-label>Value</mat-label>
+                    <input formControlName="value" matInput />
+                </mat-form-field>
+                <button mat-button color="primary" (click)="deleteField(i)">
+                    <mat-icon class="delete-btn">delete_forever</mat-icon>
+                </button>
+            </div>
+        </ng-container>
+    </ng-container>
+
+    <button mat-button color="primary" class="add-uniform" (click)="addField()">
+        <mat-icon>add</mat-icon>
+    </button>
+
+</div>

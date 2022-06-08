@@ -1,9 +1,10 @@
-<as-split [direction]="group.value" (dragEnd)="handleDrag($event)">
+<!-- <as-split [direction]="group.value" (dragEnd)="handleDrag($event)">
     <as-split-area>
         <app-glsl-canvas [Textures]="Textures" [fragment]="textContent" [width]="Width" [height]="Height"></app-glsl-canvas>
 
     </as-split-area>
     <as-split-area class="code-part">
+        <mat-tab-group></mat-tab-group>
         <div class="menu">
             <button mat-button (click)="openUniformDialog()">Load</button>
             <mat-button-toggle-group #group="matButtonToggleGroup" class="button-group"
@@ -18,4 +19,6 @@
         </div>
         <app-monaco-editor (TextChange)="handleCodeChange($event)"></app-monaco-editor>
     </as-split-area>
-</as-split>
+</as-split> -->
+
+<app-workspace></app-workspace>

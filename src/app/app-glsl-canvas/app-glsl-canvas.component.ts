@@ -104,8 +104,8 @@ export class AppGlslCanvasComponent implements OnInit, AfterContentInit {
     const baseConsoleError = console.error;
 
     globalThis.console.error = (...data: any[]) => {
-      if ((data[0] as string).includes("***")) {
-        this.error = (data[0] as string).replace("***", "").trim();
+      if ((data[0] as string).includes("THREE.WebGLProgram:")) {
+        this.error = (data[0] as string).replace("THREE.WebGLProgram:", "").trim();
       }
 
       baseConsoleError(...data);

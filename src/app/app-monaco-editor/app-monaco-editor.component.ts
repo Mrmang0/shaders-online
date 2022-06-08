@@ -14,6 +14,8 @@ declare var monaco: any;
 export class MonacoEditorComponent implements OnInit, OnDestroy {
   monacoEditorService: MonacoEditorService;
 
+  @Input() editorType: "vertex" | "fragment" = "fragment";
+
   constructor(monacoEditorService: MonacoEditorService) {
     this.monacoEditorService = monacoEditorService;
   }
@@ -54,13 +56,13 @@ export class MonacoEditorComponent implements OnInit, OnDestroy {
       this._editor = monaco.editor.create(
         this._editorContainer.nativeElement,
         {
-          theme: 'vs-dark', 
-          language: 'glsl', 
-          value: default_frag, 
+          theme: 'vs-dark',
+          language: 'glsl',
+          value: this.editorType == "vertex" ? default_vertex : default_frag,
           automaticLayout: true,
           suggest: {
             snippetsPreventQuickSuggestions: false
-         }
+          }
         },
       );
 
@@ -77,20 +79,26 @@ export class MonacoEditorComponent implements OnInit, OnDestroy {
 export const default_frag = `
 precision mediump float;
 
-uniform vec2 u_resolution;
-uniform float u_time;
-uniform vec2 u_mouse;
+uniform vec2 resolution;
+uniform float time;
+uniform vec2 mouse;
 
 uniform vec4 a_positon;
 uniform vec4 a_normal;
 uniform vec4 a_position;
 uniform vec4 a_color;
 
+varying vec2 vUv;
+
 void main() {
-   vec2 uv = gl_FragCoord.xy / u_resolution.xy;   
-   float x = abs(0.5-uv.x);
-   float y = abs(0.5-uv.y);
-   vec3 colorvec = vec3(x,y,1);
-   gl_FragColor = vec4(colorvec, 0);
+  gl_FragColor = vec4(vUv.x,vUv.y,0.5,0);
 }
 `
+
+export const default_vertex = `
+varying vec2 vUv;
+
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}`

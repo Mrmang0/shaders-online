@@ -1,0 +1,34 @@
+<as-split [direction]="group.value" (dragEnd)="handleDrag($event)">
+    <as-split-area class="sceen-parent">
+        <p class="error">{{error}}</p>
+        <app-three-scene [fragmentShader]="fragmentShader" [vertexShader]="vertexShader" [height]="Height"
+            [width]="Width" [customUniforms]="customUniforms"></app-three-scene>
+    </as-split-area>
+    <as-split-area class="code-part">
+        <div class="menu">
+            <!-- <button mat-button (click)="openUniformDialog()">Load</button> -->
+            <mat-button-toggle-group #group="matButtonToggleGroup" class="button-group"
+                (change)="handlePostionChange($event)">
+                <mat-button-toggle value="horizontal">
+                    <mat-icon>border_horizontal</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle value="vertical">
+                    <mat-icon>border_vertical</mat-icon>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <mat-tab-group>
+            <mat-tab label="Fragment shader">
+                <app-monaco-editor editorType="fragment" (TextChange)="handleFragmentShanderChange($event)">
+                </app-monaco-editor>
+            </mat-tab>
+            <mat-tab label="Vertex shader">
+                <app-monaco-editor editorType="vertex" (TextChange)="handleVertexShanderChange($event)">
+                </app-monaco-editor>
+            </mat-tab>
+            <mat-tab label="Uniforms">
+                <app-uniforms-manager (uniformsChange)="handleUnifromsChange($event)"></app-uniforms-manager>
+            </mat-tab>
+        </mat-tab-group>
+    </as-split-area>
+</as-split>
