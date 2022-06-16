@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { registerGlslLanguage } from '../consts/glsl-language';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,11 @@ export class MonacoEditorService {
 
   public loadingFinished: Subject<void> = new Subject<void>();
 
-  constructor() {}
+  constructor() { }
 
   private finishLoading() {
     this.loaded = true;
+    registerGlslLanguage();
     this.loadingFinished.next();
   }
 
@@ -45,6 +47,7 @@ export class MonacoEditorService {
     } else {
       onGotAmdLoader();
     }
+
   }
 }
 

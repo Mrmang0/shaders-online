@@ -528,7 +528,71 @@ export function createProposals(monaco: any, model: any, position: any) {
         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
     }
 
-    const suggestions = [matrixCompMult, refract, reflect, faceforward, normalize, cross, dot, distance, length, sign, floor, ceil, fract, mod, min, max, clamp, step, smoothstep, abs, pow, exp, log, exp2, log2, sqrt, inversesqrt, tan, asin, acos, atan, _const, attribute, _void, _bool, int, float, bvec2, bvec3, bvec4, ivec2, ivec3, ivec3, ivec4, vec2, vec3, vec4, mat2, mat3, mat4, mix, varying, unitform, precision, sin, cos, radians, degrees];
+    const rect = {
+        label: 'rect',
+        kind: monaco.languages.CompletionItemKind.Snipet,
+        insertText: `float rect(vec2 uv,float startX,float endX,float startY, float endY, float blur){
+            float mask = band(uv.x,startX,endX,blur);
+            mask*= band(uv.y,startY,endY,blur);
+          
+            return mask;
+          }`,
+        range: range,
+        detail: matrixCompMultDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+    }
+
+    const bend = {
+        label: 'bend',
+        kind: monaco.languages.CompletionItemKind.Snipet,
+        insertText: `float band(float t, float start, float end, float blur){
+            return smoothstep(start-blur,start+blur,t) * smoothstep(end+blur,end-blur,t);
+          }`,
+        range: range,
+        detail: matrixCompMultDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+
+    }
+
+    const circle =
+    {
+        label: 'circle',
+        kind: monaco.languages.CompletionItemKind.Snipet,
+        insertText: `float circle(vec2 uv, vec2 p, float r, float b){
+          float d = length(uv-p);
+          float c = smoothstep(r,r-b,d);
+        
+          return c;
+        }`,
+        range: range,
+        detail: matrixCompMultDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+
+    }
+
+    const smiley = 
+    {
+        label: 'smiley',
+        kind: monaco.languages.CompletionItemKind.Snipet,
+        insertText: `float smiley(vec2 uv,vec2 p, float size){
+            uv-=p;
+            uv/=size;
+            float mask = circle(uv, vec2(0.), .4, .01);
+            mask -= circle(uv,vec2(-.13,.2),.07,.01);
+            mask -= circle(uv,vec2(.13,.2),.07,.01);
+          
+            float mouth = circle(uv,vec2(0.),.3,.01) - circle(uv,vec2(0,0.1),.3,.01);
+            mask-=mouth;
+          
+            return mask;
+          }`,
+        range: range,
+        detail: matrixCompMultDetails,
+        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+
+    }
+
+    const suggestions = [bend,smiley,circle,rect, matrixCompMult, refract, reflect, faceforward, normalize, cross, dot, distance, length, sign, floor, ceil, fract, mod, min, max, clamp, step, smoothstep, abs, pow, exp, log, exp2, log2, sqrt, inversesqrt, tan, asin, acos, atan, _const, attribute, _void, _bool, int, float, bvec2, bvec3, bvec4, ivec2, ivec3, ivec3, ivec4, vec2, vec3, vec4, mat2, mat3, mat4, mix, varying, unitform, precision, sin, cos, radians, degrees];
 
     return suggestions;
 }

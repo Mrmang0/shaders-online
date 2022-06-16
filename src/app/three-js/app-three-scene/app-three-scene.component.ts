@@ -94,8 +94,7 @@ export class AppThreeSceneComponent implements OnInit, OnChanges {
    */
   private createScene() {
     //* Scene
-
-    this.shaderMaterial.uniforms["resoulution"] = { value: new THREE.Vector2(this.width, this.height) };
+    this.shaderMaterial.uniforms["resolution"] = { value: new THREE.Vector2(this.width, this.height) };
     this.shaderMaterial.needsUpdate = true;
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x000000)
@@ -123,7 +122,7 @@ export class AppThreeSceneComponent implements OnInit, OnChanges {
   private startRenderingLoop() {
     //* Renderer
     // Use canvas element in template
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, preserveDrawingBuffer: true });
     this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     const controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -150,9 +149,11 @@ export class AppThreeSceneComponent implements OnInit, OnChanges {
     let component = this;
     function onPointerMove(event: PointerEvent) {
       pointer.x = event.clientX;
-      pointer.y = - event.clientY;
-      component.uniforms['mouse'] = { value: pointer };
-      // console.log(component.shaderMaterial.uniforms);
+      pointer.y = event.clientY;
+      component.shaderMaterial.uniforms['mouse'] = { value: pointer };
+      component.shaderMaterial.needsUpdate = true;
+      console.log(pointer, component.width, component.height, pointer.x / component.width, pointer.y / component.height);
+
     }
 
     this.canvas.addEventListener('pointermove', onPointerMove);
@@ -179,10 +180,11 @@ export class AppThreeSceneComponent implements OnInit, OnChanges {
 
     if (changes["width"]?.currentValue) {
       this.canvas.width = changes["width"].currentValue;
-      console.log(changes["width"].currentValue)
       this.camera.aspect = this.width / this.height
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(this.width, this.height)
+      this.shaderMaterial.uniforms["resolution"] = { value: new THREE.Vector2(this.width, this.height) };
+      this.shaderMaterial.needsUpdate = true;
 
     }
     if (changes["height"]?.currentValue) {
@@ -190,6 +192,8 @@ export class AppThreeSceneComponent implements OnInit, OnChanges {
       this.camera.aspect = this.width / this.height
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(this.width, this.height)
+      this.shaderMaterial.uniforms["resolution"] = { value: new THREE.Vector2(this.width, this.height) };
+      this.shaderMaterial.needsUpdate = true;
     }
 
     if (changes["customUniforms"]?.currentValue) {

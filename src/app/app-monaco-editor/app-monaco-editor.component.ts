@@ -70,8 +70,6 @@ export class MonacoEditorComponent implements OnInit, OnDestroy {
         const value = this._editor.getValue();
         this.TextChange.emit(value);
       })
-
-      registerGlslLanguage();
     }
   }
 }

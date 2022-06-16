@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { IOutputData } from 'angular-split';
 import { filter, Observable } from 'rxjs';
@@ -23,8 +23,24 @@ export class AppWorkspaceComponent implements OnInit {
   @Output() fragmentShaderChange = new EventEmitter<string>();
   @Output() vertexShaderChange = new EventEmitter<string>();
   public customUniforms: UniformState = {}
-  constructor(@Inject(ElementRef) private elementRef: ElementRef) { }
+  constructor(@Inject(ElementRef) private elementRef: ElementRef) {
+    const element = this.elementRef.nativeElement as HTMLElement;
 
+    const width = Math.round(element.clientWidth - (element.clientWidth / 2)) - 30;
+    const height = Math.round(element.clientHeight - (element.clientHeight / 2)) - 30;
+
+    const minValue = Math.min(width, height);
+    const minWidth = Math.min(width, element.clientHeight);
+
+    if (this.orientation == "horizontal") {
+      this.Width = minWidth;
+      this.Height = minWidth;
+    } else {
+      this.Width = minValue;
+      this.Height = minValue;
+    }
+  }
+  
   ngOnInit(): void {
     const baseConsoleError = console.error;
 
@@ -65,8 +81,8 @@ export class AppWorkspaceComponent implements OnInit {
     const minWidth = Math.min(width, element.clientHeight);
 
     if (this.orientation == "horizontal") {
-      this.Width = minWidth - 70;
-      this.Height = minWidth - 70;
+      this.Width = minWidth;
+      this.Height = minWidth;
     } else {
       this.Width = minValue;
       this.Height = minValue;
